@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+<title>SoftwareHouse B&L - Erro</title>
+
+<link href="../../assets/img/favicon.png" rel="icon">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+<link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="../../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="../../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="../../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+	<header id="header" class="fixed-top header-inner-pages">
+		<div class="container d-flex align-items-center justify-content-lg-between">
+			<h1 class="logo me-auto me-lg-0">
+				<a th:href="@{/}">B&L<span>.</span></a>
+			</h1>
+			<nav id="navbar" class="navbar order-last order-lg-0">
+				<ul>
+					<li><a class="nav-link scrollto" th:href="@{/}">Início</a></li>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<li><a class="nav-link scrollto" th:href="@{/home/cadastro}">Cadastro no sistema</a></li>
+					</div>
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						<li><a class="nav-link scrollto" th:href="@{/home/mostrarTodosServicos}">Todos serviços disponiveis</a></li>
+					</div>
+					<div sec:authorize="hasRole('ROLE_USUARIO')">
+						<li><a class="nav-link scrollto" th:href="@{/home/escolha}">Contratar um Serviço</a></li>
+					</div>
+					<li><a class="nav-link scrollto" th:href="@{/about}">Sobre</a></li>
+				</ul>
+				<i class="bi bi-list mobile-nav-toggle"></i>
+			</nav>
+			<div sec:authorize="hasRole('ROLE_USUARIO')">
+				<form th:action="@{/logout}" method="post">
+					<a th:href="@{/perfil}" class="get-started-btn get-perfil-btn scrollto"><img src="../../assets/img/perfil.png" width="20" height="20" /></a> &nbsp; <input type="submit" value="Sair" class="get-started-btn scrollto" style="background: transparent;">
+				</form>
+			</div>
+		</div>
+	</header>
+
+	<main id="main">
+		<section class="breadcrumbs">
+			<div class="container">
+				<br>
+				<div>
+					<h1>Tem certeza que quer Remover o Servico?</h1>
+					<br>
+					<p>Servico: [[${servico.nomeServico}]]</p>
+					<p>Descricao: [[${servico.descricaoServico}]]</p>
+					<div th:switch="${servico.statusServico}">
+						<p th:case="1">Status: Enviado para o desenvolvedor</p>
+						<p th:case="2">Status: Recebido</p>
+						<p th:case="3">Status: Em Andamento</p>
+						<p th:case="4">Status: Concluido</p>
+					</div>
+					<form th:action="@{/perfil/removerservico}" th:object="${servico}" method="post">
+						<input type="hidden" th:field="*{idServico}">	
+						<input type="hidden" th:field="*{nomeServico}">
+						<input type="hidden" th:field="*{descricaoServico}">
+						<input type="hidden" th:field="*{statusServico}">
+						<input class="get-started-btn scrollto" style="color: black !important; font-weight: bold !important;" type="submit" value="Remover">
+					</form>
+					<hr>
+				</div>
+			</div>
+			<br>
+			<br>
+			<div class="container">
+				<a th:href="@{/perfil}" class="get-started-btn scrollto" style="color: black !important; font-weight: bold !important;">Voltar</a>
+			</div>
+			<br>
+		</section>
+	</main>
+
+	<footer id="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="footer-info">
+							<h3>
+								B&L<span>.</span>
+							</h3>
+							<p>
+								Rua Exemplo <br /> Uberaba, MG, BRASIL<br /> <br /> <strong>Phone:</strong> +55 (34) 3888 8888<br /> <strong>Email:</strong> bel@email.com<br />
+							</p>
+							<div class="social-links mt-3">
+								<a href="#" class="twitter"><i class="bx bxl-twitter"></i></a> <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a> <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a> <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a> <a href="#" class="linkedin"><i
+									class="bx bxl-linkedin"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-2 col-md-6 footer-links">
+						<h4>Links</h4>
+						<ul>
+							<li><i class="bx bx-chevron-right"></i> <a th:href="@{/}">Início</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a th:href="@{/about}">Sobre</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+						</ul>
+					</div>
+
+					<div class="col-lg-3 col-md-6 footer-links">
+						<h4>Our Services</h4>
+						<ul>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+							<li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+						</ul>
+					</div>
+
+					<div class="col-lg-4 col-md-6 footer-newsletter">
+						<h4>Newsletter</h4>
+						<p>Quer receber nossos novos serviços por email?</p>
+						<form action="" method="post">
+							<input type="email" name="email" placeholder="email@email.com" /><input type="submit" value="Inscrever-se" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="copyright">
+				&copy; Copyright <strong><span>B&L</span></strong>. All Rights Reserved
+			</div>
+			<div class="credits">
+				Designed by <a href="#">Bruno Moises e Leonardo Correia de Castro</a>
+			</div>
+		</div>
+	</footer>
+
+	<div id="preloader"></div>
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+	<script src="../../assets/vendor/purecounter/purecounter.js"></script>
+	<script src="../../assets/vendor/aos/aos.js"></script>
+	<script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../../assets/vendor/glightbox/js/glightbox.min.js"></script>
+	<script src="../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+	<script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+	<script src="../../assets/vendor/php-email-form/validate.js"></script>
+	<script src="../../assets/js/main.js"></script>
+</body>
+</html>
